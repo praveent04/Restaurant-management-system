@@ -6,9 +6,10 @@ import (
 	"golang-restaurant-management/database"
 	"golang-restaurant-management/routes"
 	"golang-restaurant-management/middleware"
-	"go.mongodb.org/mongo.driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
+var foodcollection *mongo.collection = database.Opencollection(database.client,"food")
 
 func main() {
 
@@ -19,7 +20,7 @@ func main() {
 
 	router := gin.New()
 	router.Use(gin.Logger())
-	routes.UseRoutes(router)
+	routes.UserRoutes(router)
 	router.Use(middleware.Authentication())
 
 	routes.FoodRoutes(router)
@@ -30,5 +31,5 @@ func main() {
 	routes.InvoiceRoutes(router)
 	
 	router.Run(":"+port)
-	
+
 }
